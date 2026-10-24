@@ -1,0 +1,341 @@
+[
+  {
+    "name": "query",
+    "description": "One query over code symbols, docs (brain-search) and optional ops subject (kiwi-graph).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "q": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "q"
+      ]
+    }
+  },
+  {
+    "name": "code_overview",
+    "description": "List symbols in a file.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ]
+    }
+  },
+  {
+    "name": "code_find",
+    "description": "Find symbols by name under a path.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  {
+    "name": "code_definition",
+    "description": "Go to definition at 1-based line/col.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "col": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "line",
+        "col"
+      ]
+    }
+  },
+  {
+    "name": "code_references",
+    "description": "Find references at 1-based line/col.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer"
+        },
+        "col": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "line",
+        "col"
+      ]
+    }
+  },
+  {
+    "name": "code_replace_body",
+    "description": "Replace one symbol's full source range with new text (writes file).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "name",
+        "body"
+      ]
+    }
+  },
+  {
+    "name": "ops_graph",
+    "description": "Read-only kiwi-graph query: args list, first is rules|trace|owners|preflight|validate.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "args"
+      ]
+    }
+  },
+  {
+    "name": "decide",
+    "description": "OpenAI Decisions API (tools/decisions): kind predicate|choice|score, options = choices or levels low..high. Not for final human decisions.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "input": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "question",
+        "input"
+      ]
+    }
+  },
+  {
+    "name": "ask",
+    "description": "Kiwi answers directly with evidence and confidence; risky or low-confidence questions return 오너 확인 필요.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "task": {
+          "type": "string"
+        },
+        "principal": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "question"
+      ]
+    }
+  },
+  {
+    "name": "ask_resolve",
+    "description": "Record the actual answer to a Kiwi ask and update its evidence weights.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ask_id": {
+          "type": "string"
+        },
+        "actual": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ask_id",
+        "actual"
+      ]
+    }
+  },
+  {
+    "name": "ask_stats",
+    "description": "Read Kiwi ask statistics for the last days; does not write reports.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "days": {
+          "type": "integer"
+        }
+      },
+      "required": []
+    }
+  },
+  {
+    "name": "context_for",
+    "description": "Kiwi task start: returns user_intents, mandatory_rules (never truncated), selected_context within budget, required_checks, owners, blocked_actions, omitted_refs, source_git_sha, freshness. Call once at task start instead of reading all rules.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "principal": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "budget": {
+          "type": "integer"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "principal",
+        "task"
+      ]
+    }
+  },
+  {
+    "name": "kiwi_rule",
+    "description": "Fetch one Kiwi node by id (for omitted_refs; kiwi://rule/{id}).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  {
+    "name": "kiwi_status",
+    "description": "Kiwi status: active sha, intent epoch, writer lease, outbox, brief stats.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    }
+  },
+  {
+    "name": "task_guard",
+    "description": "Check a running task against the latest user intent epoch: verdict ok|revise|cancelled|fenced.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string"
+        },
+        "fencing_token": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_id",
+        "fencing_token"
+      ]
+    }
+  },
+  {
+    "name": "docs_search",
+    "description": "Semantic Kiwi doc search via existing brain-search (EmbeddingGemma); rg fallback on box.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "k": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "query"
+      ]
+    }
+  }
+]

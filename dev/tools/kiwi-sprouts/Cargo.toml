@@ -1,0 +1,30 @@
+[package]
+name = "kiwi-sprouts"
+version = "0.1.0"
+edition = "2021"
+publish = false
+default-run = "kiwi-sprouts"
+autoexamples = false
+
+[dependencies]
+kiwi-core = { path = "../kiwi-core" }
+serde_json = { version = "1", features = ["preserve_order", "arbitrary_precision", "float_roundtrip"] }
+regex = "1"
+percent-encoding = "2"
+dunce = "1"
+num-bigint = "0.4"
+num-traits = "0.2"
+encoding_rs = "0.8"
+ryu = "1"
+
+[[bin]]
+name = "kiwi-sprouts"
+path = "src/main.rs"
+
+[[bin]]
+name = "kiwi-sprouts-test-driver"
+path = "examples/test_driver.rs"
+
+[[bin]]
+name = "kiwi-sprouts-fixture"
+path = "examples/fixture.rs"

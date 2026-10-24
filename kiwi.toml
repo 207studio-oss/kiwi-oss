@@ -1,0 +1,15 @@
+# Kiwi compile manifest (kiwi-core). Rule metadata lives here or in each file's frontmatter (frontmatter wins).
+# mandatory = never truncated, never competes for budget. actions/paths narrow when a rule applies.
+[compile]
+version = 2
+mandatory = ["event-driven"]
+
+[rules.realtime-first]
+actions = ["code", "edit"]
+
+[rules.app-ui-buttons]
+actions = ["ui", "design", "code"]
+
+[writer]
+# Rule changes matching these wait for an approval reference; everything else goes checks → main.
+gated = ["rules/security", "rules/payment", "*security*", "*payment*"]
