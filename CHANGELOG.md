@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1 — 2026-10-24
+
+- Internal maintenance only; no user-visible changes.
+
 ## v0.1.0 — 2026-10-24
 
 - [feature/cli] kiwi CLI: intent/approval ledger, task guard, rule compiler, context_for briefs, writer transaction and lint

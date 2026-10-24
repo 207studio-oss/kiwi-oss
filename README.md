@@ -34,4 +34,4 @@ The Python tests need Python 3.12 or newer and git.
 
 ## License
 
-No license has been chosen yet. Until a LICENSE file is added, default copyright applies: you can read the code, but reuse needs permission.
+MIT. See [LICENSE](LICENSE).
